@@ -6,7 +6,7 @@ const {
   getAll,
   updateContacts,
 } = require("./db/contacts.js");
-const shortid = require("shortid");
+const {nanoid} = require("nanoid");
 const { Command } = require("commander");
 const program = new Command();
 
@@ -34,7 +34,7 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
     }
     case "add": {
       const contacts = await getAll();
-      const newContact = { id: shortid.generate(), name, email, phone };
+      const newContact = { id: nanoid(), name, email, phone };
       contacts.push(newContact);
       await updateContacts(contacts);
       console.log(newContact);
