@@ -6,7 +6,7 @@ const {
   getAll,
   updateContacts,
 } = require("./db/contacts.js");
-const {nanoid} = require("nanoid");
+const { nanoid } = require("nanoid");
 const { Command } = require("commander");
 const program = new Command();
 
@@ -24,27 +24,16 @@ const argv = program.opts();
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list": {
-      const contacts = await getAll();
-      console.table(contacts);
+      return listContacts();
     }
     case "get": {
-      const contacts = await getAll();
-      const result = contacts.find((item) => item.id === id);
-      console.log(result || null);
+      return getContactById(id);
     }
     case "add": {
-      const contacts = await getAll();
-      const newContact = { id: nanoid(), name, email, phone };
-      contacts.push(newContact);
-      await updateContacts(contacts);
-      console.log(newContact);
+      return addContact(name, email, phone);
     }
     case "remove": {
-      const contacts = await getAll();
-      const index = contacts.findIndex((item) => item.id === id);
-      const [result] = contacts.splice(index, 1);
-      await updateContacts(contacts);
-      console.log(result);
+      return removeContact(id);
     }
     default:
       console.warn("\x1B[31m Unknown action type!");
