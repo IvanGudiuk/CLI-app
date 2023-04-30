@@ -5,7 +5,7 @@ const {
   addContact,
   getAll,
   updateContacts,
-} = require("./db/contacts.js");
+} = require("./contacts.js");
 const { nanoid } = require("nanoid");
 const { Command } = require("commander");
 const program = new Command();
